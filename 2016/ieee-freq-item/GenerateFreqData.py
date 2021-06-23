@@ -40,7 +40,7 @@ def generate_itemset(row_count, max_per_basket, num_freq_sets, item_count, prob_
     filename = str(prob_frequent)+"_tsz" \
         + str(max_per_basket)+'_tct' \
          +sizeof_fmt(row_count)+'.txt'
-
+    
     for i in tqdm(range(num_freq_sets),desc=f"{filename}:pass 1/2"):
         cnt = random.randint(1,max_per_basket)
         freq_itemsets.append(random.sample(pop_frequent,cnt))
@@ -57,15 +57,17 @@ def generate_itemset(row_count, max_per_basket, num_freq_sets, item_count, prob_
 
             needed = max(0,cnt - len(line))
             line = line + random.sample(pop_regular,needed)
+            
+            writer = csv.writer(f)
+            writer.writerow(line)
+            #f.write(" ".join(line)+"\n")
 
-            f.write(" ".join(line)+"\n")
-
-random.seed(1000)
-ROWS = 10000000
+#random.seed(1000)
+#ROWS = 10000000
 #generate_itemset(1000, 10, 100, 50000, 0.5)
 
-for i in range(10,110,10):
-    generate_itemset(ROWS, i, 100, 50000, 0.5)
+#for i in range(10,110,10):
+#    generate_itemset(ROWS, i, 100, 50000, 0.5)
 
-for i in range(1,9):
-    generate_itemset(ROWS, 50, 100, 50000, i/10.0)
+#for i in range(1,9):
+#    generate_itemset(ROWS, 50, 100, 50000, i/10.0)
